@@ -1,9 +1,9 @@
 {
     "user_id_list": [
-        "6074526225"
+        "3807782568","570459922","5657657702","3208599695","2292992994","6409940324","2819248554","1805599740","6875357818"
     ],
     "only_crawl_original": 0,
-    "since_date": 1,
+    "since_date": "1900-01-01",
     "start_page": 1,
     "write_mode": [
         "csv"
@@ -18,7 +18,7 @@
     "repost_max_download_count": 100,
     "user_id_as_folder_name": 0,
     "remove_html_tag": 1,
-    "cookie": "your cookie",
+    "cookie": "SCF=AozcfTfeycqnR5sgPkPk22Of6SfhbFbyppRjnG3GKdSJryUG8vrVAX9tAin4_XgpID8co-S8CwzJiRrTHp0ksFM.; SUB=_2A25LyKf1DeRhGeFH61YX8ibEzz-IHXVop6U9rDV6PUJbktANLULukW1NeDv3p59aI-LfLLoQ20OEyjJzLa5HlvES; SUBP=0033WrSXqPxfM725Ws9jqgMF55529P9D9WhoFlYNIGw8am7wDd3TeEw_5JpX5KMhUgL.FoM4ehBceonRShe2dJLoIpYLxK-L1hnL1KnLxKBLB.BLBoeLxKML12qLB.83Ug4N; ALF=1727292581; _T_WM=e6592c224015819a95bbfeac1679361e",
     "mysql_config": {
         "host": "localhost",
         "port": 3306,
