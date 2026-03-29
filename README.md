@@ -1,23 +1,106 @@
-* [功能](#功能)
-* [输出](#输出)
-* [实例](#实例)
-* [运行环境](#运行环境)
-* [使用说明](#使用说明)
-  * [下载脚本](#1下载脚本)
-  * [安装依赖](#2安装依赖)
-  * [程序设置](#3程序设置)
-  * [设置数据库（可选）](#4设置数据库可选)
-  * [运行脚本](#5运行脚本)
-  * [按需求修改脚本（可选）](#6按需求修改脚本可选)
-  * [定期自动爬取微博（可选）](#7定期自动爬取微博可选)
-* [如何获取user_id](#如何获取user_id)
-* [添加cookie与不添加cookie的区别（可选）](#添加cookie与不添加cookie的区别可选)
-* [如何获取cookie（可选）](#如何获取cookie可选)
-* [如何检测cookie是否有效（可选）](#如何检测cookie是否有效可选)
+# 📱 fork-weibo-crawler - 微博爬虫
+
+![Python](https://img.shields.io/badge/Python-3.x-blue?logo=python)
+![License](https://img.shields.io/badge/License-Unknown-lightgrey)
+
+## 📖 项目简介
+
+fork-weibo-crawler是微博数据爬取工具,支持爬取用户微博、评论、点赞等数据,并提供多种数据存储方式(CSV、JSON、MySQL、MongoDB、SQLite)。
+
+## 📦 项目来源
+
+- **原项目**: 未知(待确认)
+- **原作者**: 未知
+- **开源协议**: 未明确标注(需查看原项目)
+- **Fork时间**: 2024年
+
+## 🔧 二次开发内容
+
+本项目为原项目的学习研究版本,主要用于:
+- 学习爬虫技术和数据存储
+- 研究定时任务和增量爬取
+- 了解社交媒体数据分析方法
+
+## ⚠️ 免责声明
+
+本项目仅供学习研究使用,请勿用于商业用途或非法用途。使用本项目所产生的一切后果由使用者自行承担。
 
 ## 功能
 
-连续爬取**一个**或**多个**新浪微博用户（如[Dear-迪丽热巴](https://weibo.cn/u/1669879400)、[郭碧婷](https://weibo.cn/u/1729370543)）的数据，并将结果信息写入文件。写入信息几乎包括了用户微博的所有数据，主要有**用户信息**和**微博信息**两大类，前者包含用户昵称、关注数、粉丝数、微博数等等；后者包含微博正文、发布时间、发布工具、评论数等等，因为内容太多，这里不再赘述，详细内容见[输出](#输出)部分。具体的写入文件类型如下：
+连续爬取**一个**或**多个**新浪微博用户（如[Dear-迪丽热巴](https://weibo.cn/u/1669879400)、[郭碧婷](https://weibo.cn/u/1729370543)）的数据，并将结果信息写入文件。写入信息几乎包括了用户微博的所有数据，主要有**用户信息**和**微博信息**两大类，前者包含用户昵称、关注数、粉丝数、微博数等等；后者包含微博正文、发布时间、发布工具、评论数等等，因为内容太多，这里不再赘述，详细内容见[输出](#输出)部分。
+
+## 📊 系统架构
+
+```mermaid
+flowchart TB
+    subgraph Config["⚙️ 配置管理"]
+        Settings["爬取配置<br/>user_id"]
+        Cookie["Cookie管理<br/>登录态"]
+        Schedule["定时任务<br/>增量爬取"]
+    end
+    
+    subgraph Crawler["🕷️ 爬虫引擎"]
+        Request["请求发送<br/>HTTP"]
+        Parser["页面解析<br/>HTML"]
+        Filter["数据过滤<br/>去重"]
+    end
+    
+    subgraph DataProcessor["📦 数据处理"]
+        UserInfo["用户信息<br/>昵称/粉丝"]
+        WeiboInfo["微博信息<br/>正文/时间"]
+        Media["媒体资源<br/>图片/视频"]
+        Comment["评论数据<br/>转发数据"]
+    end
+    
+    subgraph Storage["💾 存储系统"]
+        CSV["CSV文件"]
+        JSON["JSON文件"]
+        MySQL["MySQL数据库"]
+        MongoDB["MongoDB数据库"]
+        SQLite["SQLite数据库"]
+    end
+    
+    subgraph Output["📁 输出结果"]
+        Files["本地文件"]
+        Database["数据库存储"]
+        Download["媒体下载"]
+    end
+    
+    Config --> Crawler
+    Crawler --> DataProcessor
+    DataProcessor --> Storage
+    Storage --> Output
+    
+    Settings --> Request
+    Cookie --> Request
+    Request --> Parser
+    Parser --> Filter
+    
+    Filter --> UserInfo
+    Filter --> WeiboInfo
+    Filter --> Media
+    Filter --> Comment
+    
+    UserInfo --> CSV
+    UserInfo --> JSON
+    WeiboInfo --> MySQL
+    WeiboInfo --> MongoDB
+    Media --> Download
+    
+    classDef configStyle fill:#e3f2fd,stroke:#1565c0,stroke-width:2px
+    classDef crawlerStyle fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    classDef processStyle fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    classDef storageStyle fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
+    classDef outputStyle fill:#fce4ec,stroke:#c2185b,stroke-width:2px
+    
+    class Settings,Cookie,Schedule configStyle
+    class Request,Parser,Filter crawlerStyle
+    class UserInfo,WeiboInfo,Media,Comment processStyle
+    class CSV,JSON,MySQL,MongoDB,SQLite storageStyle
+    class Files,Database,Download outputStyle
+```
+
+具体的写入文件类型如下：
 
 * 写入**csv文件**（默认）
 * 写入**json文件**（可选）
