@@ -1,4 +1,7 @@
 ### Project ###
+.dockerignore
+.git*
+js.json
 log/
 weibo/
 
@@ -10,7 +13,11 @@ weibo/
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
 
 # User-specific stuff
-.idea/
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/**/usage.statistics.xml
+.idea/**/dictionaries
+.idea/**/shelf
 
 # AWS User-specific
 .idea/**/aws.xml
@@ -321,12 +328,7 @@ cython_debug/
 #.idea/
 
 ### VisualStudioCode ###
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-!.vscode/*.code-snippets
+.vscode/
 
 # Local History for Visual Studio Code
 .history/
@@ -372,7 +374,3 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/python,jetbrains,visualstudiocode,windows,macos,linux
-
-
-js.json
-user_id_list.txt
